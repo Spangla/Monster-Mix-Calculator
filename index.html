@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Monster Mix</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root {
+      --brand-blue: #0d47a1;
+      --brand-black: #000000;
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --muted: #666666;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: #222;
+      padding: 18px;
+    }
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      padding: 18px;
+      text-align: center;
+    }
+    img.logo { max-width: 180px; height: auto; display:block; margin: 8px auto 12px; }
+    h1 { margin: 6px 0 14px; color: var(--brand-blue); font-size:20px; }
+    .row { text-align:left; margin-bottom:12px; }
+    label { display:block; font-weight:600; margin-bottom:6px; color:#000; }
+    input[type=number], select {
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid #d0d7de;
+      font-size:16px;
+    }
+    .controls { display:flex; gap:10px; align-items:center; }
+    .controls .half { flex:1; }
+    .checkbox-row { display:flex; align-items:center; gap:10px; }
+    button {
+      background: var(--brand-blue);
+      color: white;
+      border: none;
+      padding: 12px;
+      width:100%;
+      border-radius:8px;
+      font-size:16px;
+      cursor:pointer;
+    }
+    button:active { transform: translateY(1px); }
+    .output { margin-top:14px; text-align:left; }
+    table { width:100%; border-collapse:collapse; margin-top:8px; }
+    th, td { padding:8px 6px; border-bottom:1px solid #eee; text-align:left; }
+    th { background: var(--brand-blue); color:#fff; font-weight:600; }
+    .muted { color:var(--muted); font-size:13px; margin-top:6px; }
+    .total td { color: var(--brand-blue); font-weight:700; }
+    @media (max-width:420px) {
+      .container { padding:14px; }
+      h1 { font-size:18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="MonsterLogo.png" alt="Monster Mix logo" class="logo" />
+    <h1>Price Calculator</h1>
+
+    <div class="row">
+      <label for="product">Product Type</label>
+      <select id="product">
+        <option value="C15" data-rate="135" selected>C15–C25 — £135/m (default)</option>
+        <option value="C30" data-rate="140">C30 — £140/m</option>
+        <option value="C35" data-rate="145">C35 — £145/m</option>
+        <option value="C40" data-rate="150">C40 — £150/m</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="metres">Metres required</label>
+      <input type="number" id="metres" min="0" step="0.1" placeholder="Enter metres (e.g. 3.5)" />
+    </div>
+
+    <div class="row checkbox-row">
+      <input type="checkbox" id="includePump" />
+      <label for="includePump" style="margin:0;font-weight:600;">Include Pump (£350)</label>
+    </div>
+
+    <button onclick="showPrice()">Calculate</button>
+
+    <div id="output" class="output"></div>
+
+    <div class="muted">Monster Mix — transparent pricing. VAT included at 20% calculated on subtotal.</div>
+  </div>
+
+<script>
+function getRateFromProduct(prodSelect) {
+  const opt = prodSelect.options[prodSelect.selectedIndex];
+  return parseFloat(opt.getAttribute('data-rate'));
+}
+
+function calculatePrice(metres, ratePerMetre, includePump) {
+  const vatRate = 0.20;
+  const pumpCost = 350;
+  let deliveryCost = 0;
+
+  // Delivery brackets:
+  // 1–2 => first, >2–4 => second, >4–7 => third, >7.1+ => last bracket (applies to any metres >7)
+  if (includePump) {
+    if (metres >= 1 && metres <= 2) deliveryCost = 80;
+    else if (metres > 2 && metres <= 4) deliveryCost = 60;
+    else if (metres > 4 && metres <= 7) deliveryCost = 50;
+    else if (metres > 7) deliveryCost = 20;
+    else deliveryCost = 0; // for metres < 1
+  } else {
+    if (metres >= 1 && metres <= 2) deliveryCost = 90;
+    else if (metres > 2 && metres <= 4) deliveryCost = 80;
+    else if (metres > 4 && metres <= 7) deliveryCost = 60;
+    else if (metres > 7) deliveryCost = 40;
+    else deliveryCost = 0;
+  }
+
+  const materialCost = metres * ratePerMetre;
+  let subtotal = materialCost + deliveryCost;
+  let pumpCharge = 0;
+  if (includePump) {
+    pumpCharge = pumpCost;
+    subtotal += pumpCost;
+  }
+
+  const vat = subtotal * vatRate;
+  const total = subtotal + vat;
+
+  return {
+    metres: metres.toFixed(1),
+    product: document.getElementById('product').value,
+    ratePerMetre: ratePerMetre.toFixed(2),
+    materialCost: materialCost.toFixed(2),
+    deliveryCost: deliveryCost.toFixed(2),
+    pumpCost: pumpCharge.toFixed(2),
+    subtotal: subtotal.toFixed(2),
+    vat: vat.toFixed(2),
+    total: total.toFixed(2)
+  };
+}
+
+function showPrice() {
+  const metres = parseFloat(document.getElementById('metres').value) || 0;
+  const prodSelect = document.getElementById('product');
+  const rate = getRateFromProduct(prodSelect);
+  const includePump = document.getElementById('includePump').checked;
+
+  const result = calculatePrice(metres, rate, includePump);
+
+  document.getElementById('output').innerHTML = `
+    <table>
+      <tr><th>Item</th><th>Price</th></tr>
+      <tr><td>Product</td><td>${result.product}</td></tr>
+      <tr><td>Metres</td><td>${result.metres} m</td></tr>
+      <tr><td>Rate / metre</td><td>£${result.ratePerMetre}</td></tr>
+      <tr><td>Material Cost</td><td>£${result.materialCost}</td></tr>
+      <tr><td>Delivery Cost</td><td>£${result.deliveryCost}</td></tr>
+      <tr><td>Pump Cost</td><td>£${result.pumpCost}</td></tr>
+      <tr><td>Subtotal</td><td>£${result.subtotal}</td></tr>
+      <tr><td>VAT (20%)</td><td>£${result.vat}</td></tr>
+      <tr class="total"><td>Total</td><td>£${result.total}</td></tr>
+    </table>
+  `;
+}
+</script>
+</body>
+</html>
