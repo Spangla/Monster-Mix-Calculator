@@ -10,6 +10,7 @@ function calculate() {
   let materialCost = metres * rate;
 
   let deliveryCost = 0;
+  if (metres > 0) { //heres the change
   if (customDeliveryToggle) {
     deliveryCost = customDelivery;
   } else {
@@ -27,6 +28,7 @@ function calculate() {
       else deliveryCost = 40;
     }
   }
+}//and here
 
   let pumpCost = pumpRequired ? 350 : 0;
 
