@@ -69,3 +69,4 @@ document.getElementById("customDeliveryToggle").addEventListener("change", funct
 document.getElementById("waitingToggle").addEventListener("change", function() {
   document.getElementById("waitingMinutes").style.display = this.checked ? "block" : "none";
 });
+
