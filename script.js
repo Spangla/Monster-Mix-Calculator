@@ -59,6 +59,10 @@ function calculate() {
 
   document.getElementById("results").textContent = results;
 }
+// Run once on load so the receipt shows with zeros
+window.onload = function() {
+  calculate();
+};
 
 // Toggle visibility
 document.getElementById("customDeliveryToggle").addEventListener("change", function() {
