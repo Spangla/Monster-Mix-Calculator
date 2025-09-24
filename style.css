@@ -1,60 +1,81 @@
+/* Reset default margins and apply full-screen blue background */
 body {
+  margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #000000, #003366);
+  background: #003366; /* deep blue */
+  color: white;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  margin: 0;
+  padding-top: 30px;
 }
 
+/* App container - floating, no white background */
 .app {
-  background: transparent;  /* no white box */
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 10px;
   text-align: center;
-  width: 320px;
-  color: white;             /* make form labels visible */
+  max-width: 360px;
+  width: 90%;
 }
 
+/* Headings */
+h1 {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: white;
 }
 
-select, input[type="number"] {
+/* Labels and inputs */
+label {
   display: block;
-  margin: 10px auto;
-  padding: 5px;
-  width: 70%;
+  margin: 10px 0 5px;
+  font-size: 0.9rem;
 }
 
+input, select {
+  width: 80%;              /* smaller, neat */
+  max-width: 260px;        /* prevents oversized boxes */
+  padding: 6px;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Checkboxes neatly centered */
+div > label > input[type="checkbox"] {
+  margin-right: 8px;
+}
+div {
+  margin-bottom: 10px;
+}
+
+/* Button */
 button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #003366;
+  background: black;
   color: white;
   border: none;
-  border-radius: 5px;
+  padding: 10px 18px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
 }
-
 button:hover {
-  background: #0055aa;
+  background: #222;
 }
 
-/* ✅ Always show results box */
+/* Results styled like a receipt */
 #results {
   margin-top: 20px;
-  background: #eee;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 15px;
+  border-radius: 8px;
   text-align: center;
-  display: block;
-  width: fit-content;
+  white-space: pre-line;
+  font-family: monospace; /* receipt style */
+  background: rgba(0, 0, 0, 0.3); /* transparent dark overlay */
+  color: white;
 }
 
-/* ✅ Center each checkbox on its own line */
-.checkbox-group {
-  text-align: center;
-  margin: 10px 0;
-}
 
