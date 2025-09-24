@@ -15,13 +15,15 @@ function calculate() {
   } else {
     if (pumpRequired) {
       if (metres <= 2) deliveryCost = 60;
-      else if (metres <= 4) deliveryCost = 60;
-      else if (metres <= 7) deliveryCost = 50;
+      else if (metres <= 3) deliveryCost = 60;
+      else if (metres <= 5) deliveryCost = 50;
+      else if (metres <= 7) deliveryCost = 40;
       else deliveryCost = 20;
     } else {
       if (metres <= 2) deliveryCost = 90;
-      else if (metres <= 4) deliveryCost = 80;
-      else if (metres <= 7) deliveryCost = 60;
+      else if (metres <= 3) deliveryCost = 80;
+      else if (metres <= 5) deliveryCost = 60;
+      else if (metres <= 7) deliveryCost = 50;
       else deliveryCost = 40;
     }
   }
