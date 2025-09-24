@@ -14,7 +14,7 @@ function calculate() {
     deliveryCost = customDelivery;
   } else {
     if (pumpRequired) {
-      if (metres <= 2) deliveryCost = 80;
+      if (metres <= 2) deliveryCost = 60;
       else if (metres <= 4) deliveryCost = 60;
       else if (metres <= 7) deliveryCost = 50;
       else deliveryCost = 20;
