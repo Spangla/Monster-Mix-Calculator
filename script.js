@@ -1,12 +1,12 @@
 function calculate() {
-  const metres = parseFloat(document.getElementById("metres").value) || 0;
+  const metres = parseFloat(document.getElementById("metres").value) || 0;//Get the number of metres entered.  document.getElementById("metres").value grabs whatever is typed - it is always a sting. parseFloat converts string to a number.
   const rate = parseFloat(document.getElementById("product").value);
   const pumpRequired = document.getElementById("pump").checked;
   const customDeliveryToggle = document.getElementById("customDeliveryToggle").checked;
   const customDelivery = parseFloat(document.getElementById("customDelivery").value) || 0;
   const waitingToggle = document.getElementById("waitingToggle").checked;
   const waitingMinutes = parseInt(document.getElementById("waitingMinutes").value) || 0;
-
+//.value = text typed in box.  .checked = true/false from tick boxes.   parseFloat/parseInt - turn text into numbers.  || is the 'or' operator, I used it so it doesnt return undefined and always returns a number. 0 if no input.
   let materialCost = metres * rate;
 
   let deliveryCost = 0;
