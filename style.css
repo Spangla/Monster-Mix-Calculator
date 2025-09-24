@@ -45,8 +45,9 @@ button:hover {
   background: #eee;
   padding: 10px;
   border-radius: 5px;
-  text-align: left;
+  text-align: center;
   display: block;
+  width: fit-content;
 }
 
 /* ✅ Center each checkbox on its own line */
