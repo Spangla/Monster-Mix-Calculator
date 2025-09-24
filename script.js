@@ -58,6 +58,7 @@ function calculate() {
   results += "----------------------------";
 
   document.getElementById("results").textContent = results;
+  document.getElementById("results").style.display = "inline-block";
 }
 
 // Toggle visibility of custom delivery input
