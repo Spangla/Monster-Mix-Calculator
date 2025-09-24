@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monster Mix</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <div class="app">
+    <h1>Monster Mix Concrete & Pumps</h1>
+
+    <label for="product">Product:</label>
+    <select id="product">
+      <option value="135">C25 or less (£135)</option>
+      <option value="140">C30 (£140)</option>
+      <option value="145">C35 (£145)</option>
+      <option value="150">C40 (£150)</option>
+    </select>
+
+    <label for="metres">Metres required:</label>
+    <input type="number" id="metres" min="0" step="0.1" />
+
+    <div class="checkbox-row">
+      <label><input type="checkbox" id="pump" /> Pump required (+£350)</label>
+    </div>
+
+    <div class="checkbox-row">
+      <label><input type="checkbox" id="customDeliveryToggle" /> Custom Delivery</label>
+      <input type="number" id="customDelivery" placeholder="Enter delivery cost" style="display:none;" />
+    </div>
+
+    <div class="checkbox-row">
+      <label><input type="checkbox" id="waitingToggle" /> Waiting Time</label>
+      <input type="number" id="waitingMinutes" placeholder="Enter minutes" style="display:none;" />
+    </div>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="results"></div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
+</html>
